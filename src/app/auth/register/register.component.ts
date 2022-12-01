@@ -8,9 +8,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
 
+  public formSubmitted = false;
+
   public registerForm = this.fb.group({
     nombre: ['Maikol', Validators.required],
-    email: ['maikolsoro.z1998@gmail.com', Validators.required],
+    email: ['maikolsoro.z1998@gmail.com', [Validators.required, Validators.email]],
     password: ['123456', Validators.required],
     password2: ['123456', Validators.required],
     terminos: [false, Validators.required]
@@ -19,6 +21,25 @@ export class RegisterComponent {
   constructor( private fb: FormBuilder){}
 
   createUser(){
+    this.formSubmitted = true;
+    
     console.log(this.registerForm.value);
+    if(this.registerForm.valid){
+      console.log('posteando form');
+    } else {
+      console.log('Form no es correcto');
+    }
   }
+  campoNoValido(campo: string): boolean {
+     
+      if( this.registerForm.get(campo)?.invalid && this.formSubmitted){
+        return true;
+      } else {
+        return false;
+      }
+  }
+  aceptarTerminos() {
+    return !this.registerForm.get('terminos')?.value && this.formSubmitted;
+  }
+  
 }
