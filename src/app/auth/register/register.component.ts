@@ -17,7 +17,7 @@ export class RegisterComponent {
     password2: ['123456', Validators.required],
     terminos: [false, Validators.required]
   }, {
-    validators: passwordsIguales('password', 'password2'),
+    validators: this.passwordsIguales('password', 'password2'),
   });
 
   constructor( private fb: FormBuilder){}
